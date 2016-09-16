@@ -1,10 +1,10 @@
-package fake_command_runner_matchers
+package fake_command_runner_matchers // import "code.cloudfoundry.org/commandrunner/fake_command_runner/matchers"
 
 import (
 	"fmt"
 	"os/exec"
 
-	"github.com/cloudfoundry/commandrunner/fake_command_runner"
+	"code.cloudfoundry.org/commandrunner/fake_command_runner"
 )
 
 func HaveStartedExecuting(spec fake_command_runner.CommandSpec) *HaveStartedExecutingMatcher {

@@ -1,7 +1,7 @@
 package fake_command_runner_test
 
 import (
-	"github.com/cloudfoundry/commandrunner/fake_command_runner"
+	"code.cloudfoundry.org/commandrunner/fake_command_runner"
 
 	"os/exec"
 

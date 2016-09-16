@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/cloudfoundry/gunk/command_runner/linux_command_runner"
+	"github.com/cloudfoundry/commandrunner/linux_command_runner"
 )
 
 var _ = Describe("Running commands", func() {

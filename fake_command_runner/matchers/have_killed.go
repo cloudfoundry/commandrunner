@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/cloudfoundry/gunk/command_runner/fake_command_runner"
+	"github.com/cloudfoundry/commandrunner/fake_command_runner"
 )
 
 func HaveKilled(spec fake_command_runner.CommandSpec) *HaveKilledMatcher {

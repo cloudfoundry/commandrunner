@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/cloudfoundry/gunk/command_runner/fake_command_runner"
+	"github.com/cloudfoundry/commandrunner/fake_command_runner"
 )
 
 func HaveSignalled(spec fake_command_runner.CommandSpec, signal os.Signal) *HaveSignalledMatcher {

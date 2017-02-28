@@ -5,6 +5,7 @@ import (
 
 	"os/exec"
 
+	"code.cloudfoundry.org/commandrunner/fake_command_runner/matchers"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -18,8 +19,8 @@ var _ = Describe("FakeCommandRunner", func() {
 
 	BeforeEach(func() {
 		runner = fake_command_runner.New()
-		cmd = &exec.Cmd{}
-		cmd2 = &exec.Cmd{}
+		cmd = &exec.Cmd{Path: "p", Args: []string{"p", "arg"}}
+		cmd2 = &exec.Cmd{Path: "q", Args: []string{"q", "arg2"}}
 	})
 
 	Describe("Kill", func() {
@@ -49,4 +50,39 @@ var _ = Describe("FakeCommandRunner", func() {
 		})
 	})
 
+	Describe("Matchers", func() {
+		Describe("HaveExecuted", func() {
+			It("should match commands in any order", func() {
+				runner.Run(cmd)
+				runner.Run(cmd2)
+				Expect(runner).To(fake_command_runner_matchers.HaveExecuted(fake_command_runner.CommandSpec{Path: "p", Args: []string{"arg"}},
+					fake_command_runner.CommandSpec{Path: "q", Args: []string{"arg2"}}))
+				Expect(runner).To(fake_command_runner_matchers.HaveExecuted(fake_command_runner.CommandSpec{Path: "q", Args: []string{"arg2"}},
+					fake_command_runner.CommandSpec{Path: "p", Args: []string{"arg"}}))
+			})
+
+			It("should match a subset of the commands", func() {
+				runner.Run(cmd)
+				runner.Run(cmd2)
+				Expect(runner).To(fake_command_runner_matchers.HaveExecuted(fake_command_runner.CommandSpec{Path: "p", Args: []string{"arg"}}))
+			})
+		})
+
+		Describe("HaveExecutedSerially", func() {
+			It("should match commands in order", func() {
+				runner.Run(cmd)
+				runner.Run(cmd2)
+				Expect(runner).To(fake_command_runner_matchers.HaveExecutedSerially(fake_command_runner.CommandSpec{Path: "p", Args: []string{"arg"}},
+					fake_command_runner.CommandSpec{Path: "q", Args: []string{"arg2"}}))
+				Expect(runner).NotTo(fake_command_runner_matchers.HaveExecutedSerially(fake_command_runner.CommandSpec{Path: "q", Args: []string{"arg2"}},
+					fake_command_runner.CommandSpec{Path: "p", Args: []string{"arg"}}))
+			})
+
+			It("should match a subset of the commands", func() {
+				runner.Run(cmd)
+				runner.Run(cmd2)
+				Expect(runner).To(fake_command_runner_matchers.HaveExecutedSerially(fake_command_runner.CommandSpec{Path: "p", Args: []string{"arg"}}))
+			})
+		})
+	})
 })

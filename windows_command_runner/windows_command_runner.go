@@ -30,7 +30,7 @@ func (r *WindowsCommandRunner) Run(cmd *exec.Cmd) error {
 		r.tee(cmd)
 	}
 
-	err := r.resolve(cmd).Run()
+	err := cmd.Run()
 
 	if r.debug {
 		if err != nil {
@@ -49,7 +49,7 @@ func (r *WindowsCommandRunner) Start(cmd *exec.Cmd) error {
 		r.tee(cmd)
 	}
 
-	err := r.resolve(cmd).Start()
+	err := cmd.Start()
 
 	if r.debug {
 		if err != nil {
@@ -67,7 +67,7 @@ func (r *WindowsCommandRunner) Background(cmd *exec.Cmd) error {
 		log.Printf("backgrounding: %s\n", prettyCommand(cmd))
 	}
 
-	err := r.resolve(cmd).Start()
+	err := cmd.Start()
 
 	if r.debug {
 		if err != nil {
@@ -113,21 +113,6 @@ func (r *WindowsCommandRunner) tee(cmd *exec.Cmd) {
 	} else if cmd.Stdout != nil {
 		cmd.Stdout = io.MultiWriter(cmd.Stdout, os.Stderr)
 	}
-}
-
-func (r *WindowsCommandRunner) resolve(cmd *exec.Cmd) *exec.Cmd {
-	originalPath := cmd.Path
-
-	path, err := exec.LookPath(cmd.Path)
-	if err != nil {
-		path = cmd.Path
-	}
-
-	cmd.Path = path
-
-	cmd.Args = append([]string{originalPath}, cmd.Args...)
-
-	return cmd
 }
 
 func prettyCommand(cmd *exec.Cmd) string {

@@ -6,7 +6,7 @@ import (
 	"os/exec"
 
 	"code.cloudfoundry.org/commandrunner/fake_command_runner/matchers"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 

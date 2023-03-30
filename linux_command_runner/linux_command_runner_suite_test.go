@@ -1,3 +1,5 @@
+//go:build !windows
+
 package linux_command_runner_test
 
 import (

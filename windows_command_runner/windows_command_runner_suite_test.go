@@ -1,3 +1,5 @@
+//go:build windows
+
 package windows_command_runner_test
 
 import (

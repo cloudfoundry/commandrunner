@@ -18,7 +18,7 @@ var _ = Describe("Running commands", func() {
 	It("runs the command and returns nil", func() {
 		runner := windows_command_runner.New(false)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "exit"}}
+		cmd := exec.Command("powershell.exe", "-Command", "exit")
 		Expect(cmd.ProcessState).To(BeNil())
 
 		err := runner.Run(cmd)
@@ -30,7 +30,7 @@ var _ = Describe("Running commands", func() {
 	It("wires in debugging to stdout/stderr", func() {
 		runner := windows_command_runner.New(true)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "exit"}}
+		cmd := exec.Command("powershell.exe", "-Command", "exit")
 
 		err := runner.Run(cmd)
 		Expect(err).ToNot(HaveOccurred())
@@ -43,12 +43,7 @@ var _ = Describe("Running commands", func() {
 		It("returns an error", func() {
 			runner := windows_command_runner.New(false)
 
-			err := runner.Run(
-				&exec.Cmd{
-					Path: "powershell.exe",
-					Args: []string{"-Command", "exit 1"},
-				},
-			)
+			err := runner.Run(exec.Command("powershell.exe", "-Command", "exit 1"))
 
 			Expect(err).To(HaveOccurred())
 		})
@@ -59,7 +54,7 @@ var _ = Describe("Starting commands", func() {
 	It("starts the command and does not block on it", func() {
 		runner := windows_command_runner.New(false)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "read-host"}}
+		cmd := exec.Command("powershell.exe", "-Command", "read-host")
 		Expect(cmd.ProcessState).To(BeNil())
 
 		in, err := cmd.StdinPipe()
@@ -80,7 +75,7 @@ var _ = Describe("Starting commands", func() {
 	It("wires in debugging to stdout/stderr", func() {
 		runner := windows_command_runner.New(true)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "exit"}}
+		cmd := exec.Command("powershell.exe", "-Command", "exit")
 
 		err := runner.Start(cmd)
 		Expect(err).ToNot(HaveOccurred())
@@ -94,7 +89,7 @@ var _ = Describe("Backgrounding commands", func() {
 	It("starts the command and does not block on it", func() {
 		runner := windows_command_runner.New(false)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "read-host"}}
+		cmd := exec.Command("powershell.exe", "-Command", "read-host")
 		Expect(cmd.ProcessState).To(BeNil())
 
 		in, err := cmd.StdinPipe()
@@ -117,7 +112,7 @@ var _ = Describe("Waiting on commands", func() {
 	It("blocks on the command's completion", func() {
 		runner := windows_command_runner.New(false)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "Start-Sleep", "0.1"}}
+		cmd := exec.Command("powershell.exe", "-Command", "Start-Sleep", "0.1")
 		Expect(cmd.ProcessState).To(BeNil())
 
 		err := runner.Start(cmd)
@@ -134,7 +129,7 @@ var _ = Describe("Waiting on commands", func() {
 	It("does not wire in debugging to stdout/stderr", func() {
 		runner := windows_command_runner.New(true)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "exit"}}
+		cmd := exec.Command("powershell.exe", "-Command", "exit")
 
 		err := runner.Background(cmd)
 		Expect(err).ToNot(HaveOccurred())
@@ -148,7 +143,7 @@ var _ = Describe("Killing commands", func() {
 	It("terminates the command's process", func() {
 		runner := windows_command_runner.New(false)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "Start-Sleep", "10"}}
+		cmd := exec.Command("powershell.exe", "-Command", "Start-Sleep", "10")
 		Expect(cmd.ProcessState).To(BeNil())
 
 		err := runner.Start(cmd)
@@ -169,7 +164,7 @@ var _ = Describe("Killing commands", func() {
 		It("returns an error", func() {
 			runner := windows_command_runner.New(false)
 
-			cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "Start-Sleep", "10"}}
+			cmd := exec.Command("powershell.exe", "-Command", "Start-Sleep", "10")
 			Expect(cmd.ProcessState).To(BeNil())
 
 			// Note: cmd is not actually Start/Run/Waited on here
@@ -184,7 +179,7 @@ var _ = Describe("Signalling commands", func() {
 	It("sends the given signal to the process", func() {
 		runner := windows_command_runner.New(false)
 
-		cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "Start-Sleep", "10"}}
+		cmd := exec.Command("powershell.exe", "-Command", "Start-Sleep", "10")
 		Expect(cmd.ProcessState).To(BeNil())
 
 		err := runner.Start(cmd)
@@ -205,7 +200,7 @@ var _ = Describe("Signalling commands", func() {
 		It("returns an error", func() {
 			runner := windows_command_runner.New(false)
 
-			cmd := &exec.Cmd{Path: "powershell.exe", Args: []string{"-Command", "read-host"}}
+			cmd := exec.Command("powershell.exe", "-Command", "read-host")
 			Expect(cmd.ProcessState).To(BeNil())
 
 			// Note: cmd is not actually Start/Run/Waited on here

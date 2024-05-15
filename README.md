@@ -1,24 +1,17 @@
-# Contributing
+# commandrunner
 
-See the [Contributing.md](./.github/CONTRIBUTING.md) for more
-information on how to contribute.
+[![Go Report
+Card](https://goreportcard.com/badge/code.cloudfoundry.org/commandrunner)](https://goreportcard.com/report/code.cloudfoundry.org/commandrunner)
+[![Go
+Reference](https://pkg.go.dev/badge/code.cloudfoundry.org/commandrunner.svg)](https://pkg.go.dev/code.cloudfoundry.org/commandrunner)
 
-# Working Group Charter
+A generic interface for running or faking shell commands on Linux and
+Windows.
 
-This repository is maintained by [App Runtime
-Platform](https://github.com/cloudfoundry/community/blob/main/toc/working-groups/app-runtime-platform.md)
-under `Diego` area.
-
-# Contributing
-
-See the [Contributing.md](./.github/CONTRIBUTING.md) for more
-information on how to contribute.
-
-# Working Group Charter
-
-This repository is maintained by [App Runtime
-Platform](https://github.com/cloudfoundry/community/blob/main/toc/working-groups/app-runtime-platform.md)
-under `Networking` area.
+> \[!NOTE\]
+>
+> This repository should be imported as
+> `code.cloudfoundry.org/commandrunner`.
 
 # Contributing
 
@@ -29,7 +22,7 @@ information on how to contribute.
 
 This repository is maintained by [App Runtime
 Platform](https://github.com/cloudfoundry/community/blob/main/toc/working-groups/app-runtime-platform.md)
-under `Diego` area.
+under `Garden Containers` area.
 
 > \[!IMPORTANT\]
 >
